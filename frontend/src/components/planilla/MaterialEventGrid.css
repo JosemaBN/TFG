@@ -1,0 +1,225 @@
+/* Tema oscuro tipo hoja de inventario */
+.planilla-ctl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0.1rem 0.2rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid #2563eb;
+  background: #eff6ff;
+  color: #1d4ed8;
+  cursor: pointer;
+}
+
+.planilla-ctl-btn:hover:not(:disabled) {
+  background: #dbeafe;
+}
+
+.planilla-ctl-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (prefers-color-scheme: dark) {
+  .planilla-ctl-btn {
+    background: #1e3a5f;
+    border-color: #60a5fa;
+    color: #bfdbfe;
+  }
+  .planilla-ctl-btn:hover:not(:disabled) {
+    background: #2563eb;
+    color: #fff;
+  }
+}
+
+.planilla-page {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.planilla-grid-wrap {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: min(78vh, 960px);
+  --ag-background-color: #1a1a1a;
+  --ag-header-background-color: #2d2d2d;
+  --ag-odd-row-background-color: #222;
+  --ag-row-hover-color: #333;
+  --ag-border-color: #444;
+  --ag-header-foreground-color: #f3f4f6;
+  --ag-foreground-color: #f9fafb;
+  --ag-font-size: 12px;
+  /* Menos padding en todas las celdas → más columnas de evento visibles */
+  --ag-cell-horizontal-padding: 6px;
+}
+
+.planilla-grid-wrap .ag-header-cell,
+.planilla-grid-wrap .ag-header-group-cell {
+  font-weight: 600;
+}
+
+/* Texto centrado en celdas */
+.planilla-grid-wrap .ag-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* INV / OUT / REP / NAVE: padding horizontal mínimo */
+.planilla-grid-wrap .ag-cell.planilla-cell--metric {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+/* Ud por evento: celdas numéricas lo más estrechas posible */
+.planilla-grid-wrap .ag-cell.planilla-cell--ud {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.planilla-grid-wrap .ag-cell .ag-cell-wrapper,
+.planilla-grid-wrap .ag-cell .ag-cell-value {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Columnas OUT/IN: padding mínimo */
+.planilla-grid-wrap .ag-cell.planilla-cell--mov-btn {
+  padding-left: 3px;
+  padding-right: 3px;
+  overflow: visible;
+}
+
+.planilla-grid-wrap .ag-cell.planilla-cell--mov-btn .ag-cell-wrapper,
+.planilla-grid-wrap .ag-cell.planilla-cell--mov-btn .ag-cell-value {
+  overflow: visible;
+}
+
+/* Ud > 0: fondo rojo (filas material) */
+.planilla-ud--positive {
+  background-color: #b91c1c !important;
+  color: #fef2f2 !important;
+  font-weight: 600;
+}
+
+/* Tras clic OUT / IN (solo celda Ud) */
+.planilla-cell--mov-out {
+  background-color: #166534 !important;
+  color: #f0fdf4 !important;
+  font-weight: 600;
+}
+
+.planilla-cell--mov-in {
+  background-color: #1e40af !important;
+  color: #eff6ff !important;
+  font-weight: 600;
+}
+
+.planilla-desc-with-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  max-width: 100%;
+}
+
+.planilla-section-toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.65rem;
+  height: 1.65rem;
+  padding: 0;
+  font-size: 0.7rem;
+  line-height: 1;
+  border-radius: 4px;
+  border: 1px solid #6b7280;
+  background: #374151;
+  color: #f9fafb;
+  cursor: pointer;
+}
+
+.planilla-section-toggle:hover {
+  background: #4b5563;
+}
+
+.planilla-desc-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.planilla-header-inv,
+.planilla-header-out,
+.planilla-header-nave,
+.planilla-header-rep {
+  background-color: #c97b7b !important;
+  color: #111 !important;
+}
+
+.planilla-header-corner {
+  background-color: #c97b7b !important;
+  color: #111 !important;
+}
+
+.planilla-event-group {
+  background-color: #3d3d3d !important;
+}
+
+/* Cabecera de grid oculta (headerHeight: 0): sin fila extra visible */
+
+/* Filas por tipo */
+.planilla-row--param .ag-cell {
+  font-weight: 500;
+  background-color: #252530 !important;
+}
+
+.planilla-row--columnLabels .ag-cell {
+  font-weight: 700;
+  background-color: #2d3748 !important;
+  color: #f9fafb !important;
+}
+
+.planilla-row--areaSection .ag-cell {
+  font-weight: 700;
+  background-color: #2a2a2a !important;
+}
+
+.planilla-row--tipoSection .ag-cell {
+  font-weight: 600;
+  background-color: #262626 !important;
+}
+
+.planilla-row--subarea .ag-cell {
+  font-weight: 600;
+  background-color: #363636 !important;
+  color: #e5e7eb !important;
+}
+
+.planilla-cell--param {
+  font-style: italic;
+}
+
+.planilla-cell--columnLabels {
+  letter-spacing: 0.04em;
+}
+
+.planilla-cell--areaSection {
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.planilla-cell--tipoSection {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+

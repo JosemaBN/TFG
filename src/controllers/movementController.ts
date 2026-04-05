@@ -46,7 +46,8 @@ export async function createMovement(req: Request, res: Response) {
 
   try {
     const movement = await prisma.$transaction(async (tx) => {
-      const created = await tx.movement.create({
+      await applyMovementToStock(tx, productId, type, qty);
+      return tx.movement.create({
         data: {
           eventId,
           productId,
@@ -55,8 +56,6 @@ export async function createMovement(req: Request, res: Response) {
           notes: notes?.trim() || undefined,
         },
       });
-      await applyMovementToStock(tx, productId, type, qty);
-      return created;
     });
 
     const withRelations = await prisma.movement.findUnique({
@@ -83,7 +82,8 @@ export async function createMovement(req: Request, res: Response) {
 }
 
 export async function getMovementsByProduct(req: Request, res: Response) {
-  const { id } = req.params;
+  const rawId = req.params.id;
+  const id = Array.isArray(rawId) ? rawId[0] : rawId;
   if (!id) return res.status(400).json({ error: "id de producto obligatorio" });
 
   try {

@@ -7,7 +7,7 @@ datasource db {
   provider = "postgresql"
 }
 
-// ---- Único almacén y catálogo ----
+// ---- Un solo almacén (toda la app y la API asumen un único Warehouse) ----
 
 model Warehouse {
   id        String   @id @default(cuid())
@@ -19,16 +19,43 @@ model Warehouse {
   stock ProductStock[]
 }
 
+/// Áreas disponibles para el catálogo (además de las que salgan de productos ya creados).
+model CatalogArea {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+}
+
+/// Tipos disponibles para el catálogo (además de los que salgan de productos ya creados).
+model CatalogTipo {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+}
+
 model Product {
   id          String   @id @default(cuid())
-  sku         String   @unique
+  /// Código interno autoincremental (no editable en la app)
+  sku         Int      @unique @default(autoincrement())
+  marca       String?
   name        String
   description String?
+  /// Categoría: zona funcional del material (p. ej. sonido, iluminación)
+  area        String?
+  /// Categoría: tipo de equipo o pieza (p. ej. mesa, micro, cable)
+  tipo        String?
+  /// Orden manual dentro del mismo área/tipo (flechas en listado Materiales).
+  sortOrder   Int      @default(0)
+  /// Columna REP en plantilla (unidades; editable solo en plantilla vía API dedicada).
+  repQty      Int      @default(0)
+  /// Inventario total de la empresa para este material (columna INV en plantilla).
+  companyInventoryQty Int @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  stock    ProductStock[]
-  movements Movement[]
+  stock             ProductStock[]
+  movements         Movement[]
+  eventProductPlans EventProductPlan[]
 }
 
 // Stock actual en el único almacén (producto ↔ almacén, 1 almacén)
@@ -50,14 +77,37 @@ model Event {
   id         String   @id @default(cuid())
   name       String
   code       String?  @unique
+  /// Parámetros de la planilla / ficha del evento
+  poblacion  String?
+  lugar      String?
   reference  String?
   notes      String?
   startDate  DateTime?
   endDate    DateTime?
+  /// Horas del día (formato HH:mm, p. ej. desde input type="time")
+  horaMontaje    String? @db.VarChar(8)
+  horaPrueba     String? @db.VarChar(8)
+  horaComienzo   String? @db.VarChar(8)
+  horaFin        String? @db.VarChar(8)
+  horaDesmontaje String? @db.VarChar(8)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  movements Movement[]
+  movements         Movement[]
+  eventProductPlans EventProductPlan[]
+}
+
+/// Cantidad planificada (Ud) por evento y material en la plantilla
+model EventProductPlan {
+  eventId    String
+  productId  String
+  plannedQty Int      @default(0)
+  updatedAt  DateTime @updatedAt
+
+  event   Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([eventId, productId])
 }
 
 enum MovementType {

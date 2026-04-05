@@ -1,0 +1,333 @@
+/* Estilos globales mínimos para la app de inventario (complementan index.css) */
+
+.page-header h1 {
+  margin: 0 0 0.35rem;
+  font-size: 1.35rem;
+}
+
+.page-header__desc {
+  margin: 0 0 1rem;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.muted {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.error {
+  color: #b91c1c;
+  margin: 0.5rem 0;
+}
+
+.success {
+  color: #15803d;
+  margin: 0.5rem 0;
+}
+
+.empty-state {
+  padding: 1rem 0;
+}
+
+.empty-state__title {
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.link-list {
+  padding-left: 1.25rem;
+  line-height: 1.8;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stack label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.stack input,
+.stack select,
+.stack textarea {
+  padding: 0.45rem 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.grid-cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/** Listado vertical (p. ej. eventos ordenados por fecha). */
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 42rem;
+}
+
+.events-list--grouped {
+  gap: 0;
+  max-width: 44rem;
+}
+
+.events-month-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 1.75rem;
+}
+
+.events-month-block:last-child {
+  margin-bottom: 0;
+}
+
+.event-month-heading {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-color: #bae6fd;
+}
+
+.event-month-heading--muted {
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  border-color: #e5e7eb;
+}
+
+.event-month-heading--muted .event-month-heading__title {
+  color: #4b5563;
+}
+
+.event-month-heading__title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0369a1;
+}
+
+.events-week-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 0.35rem;
+}
+
+.events-week-label {
+  margin: 0;
+  padding: 0.35rem 0.5rem 0.15rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.events-week-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.15rem 0 0.35rem 0.65rem;
+  margin-left: 0.2rem;
+  border-left: 3px solid #e5e7eb;
+}
+
+.events-week-cards--flat {
+  border-left: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  background: #fff;
+}
+
+.card__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.card__link:hover h3 {
+  text-decoration: underline;
+}
+
+.card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.table th {
+  background: #f9fafb;
+}
+
+.table-inline-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.table-action-link {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  text-decoration: none;
+  background: #eff6ff;
+}
+
+.table-action-link:hover {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.table-action-danger {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  background: #fef2f2;
+  cursor: pointer;
+}
+
+.table-action-danger:hover:not(:disabled) {
+  background: #fee2e2;
+}
+
+.table-action-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.page-toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toolbar-button {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.toolbar-button:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.toolbar-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.table-reorder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  align-items: center;
+}
+
+.table-reorder button {
+  min-width: 2rem;
+  padding: 0.15rem 0.35rem;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #f9fafb;
+  cursor: pointer;
+}
+
+.table-reorder button:hover:not(:disabled) {
+  background: #e5e7eb;
+}
+
+.table-reorder button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.table-th-narrow {
+  width: 3rem;
+  text-align: center;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 1.25rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modal-card h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+
+.modal-card .stack {
+  margin-top: 0.75rem;
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.modal-actions button.action-button {
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
