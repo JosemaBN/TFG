@@ -1,9 +1,3 @@
-/**
- * Cliente HTTP único basado en fetch nativo (sin axios).
- *
- * - Desarrollo sin VITE_API_URL: mismo origen + proxy Vite `/__api` → Express (evita CORS y localhost IPv6).
- * - Producción o .env: VITE_API_URL (p. ej. http://127.0.0.1:3000).
- */
 const useDevProxy = import.meta.env.DEV && !import.meta.env.VITE_API_URL;
 
 export const API_BASE_URL = (

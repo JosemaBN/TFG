@@ -30,6 +30,14 @@
   }
 }
 
+:root {
+  --app-bg: #F0F2F5;
+  --app-text: #111827;
+  --surface-bg: #ffffff;
+  --border-ui: #e5e7eb;
+  --header-bg: #e5e7eb;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
@@ -43,19 +51,21 @@
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+    --app-bg: #0f1115;
+    --app-text: #e5e7eb;
+    --surface-bg: #161a22;
+    --border-ui: #2b3340;
+    --header-bg: #1c2230;
   }
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  text-align: initial;
+  border-inline: none;
   min-height: 100svh;
   display: flex;
   flex-direction: column;

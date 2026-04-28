@@ -5,7 +5,6 @@ import { getEventProductPlans } from "../../services/eventProductPlanService";
 import type { Event } from "../../types/event";
 import type { Product } from "../../types/product";
 import type { PlanillaRow } from "../../types/planilla";
-
 function productAreaKey(p: Product): string {
   return p.area?.trim() ?? "";
 }
@@ -14,7 +13,6 @@ function productTipoKey(p: Product): string {
   return p.tipo?.trim() ?? "";
 }
 
-/** Marca y modelo en la columna Material. */
 function materialMarcaModelo(p: Product): string {
   const marca = p.marca?.trim();
   const modelo = p.name;
@@ -121,6 +119,7 @@ export async function buildPlanillaData(): Promise<{
 
   const events = sortEventsByStartDate(eventsRaw);
 
+  /** Mapa (eventId, productId) → Ud planificadas, para pintar la celda "Ud" de cada evento. */
   const planQty = new Map<string, number>();
   for (const pl of plans) {
     planQty.set(`${pl.eventId}\t${pl.productId}`, pl.plannedQty);
@@ -128,6 +127,7 @@ export async function buildPlanillaData(): Promise<{
 
   const rows: PlanillaRow[] = [];
 
+  /** Cabecera de parámetros (filas fijadas arriba): describe cada columna-evento (no son materiales). */
   rows.push(
     paramRow("Fecha", events, (ev) => formatShortDate(ev.startDate)),
     paramRow("Población", events, (ev) => {
@@ -155,6 +155,7 @@ export async function buildPlanillaData(): Promise<{
   }
   rows.push(columnLabelsRow);
 
+  /** Agrupación por catálogo humano: Área → Tipo → Material (mejora legibilidad y defensa). */
   const areaKeys = sortAreaKeys([...new Set(products.map(productAreaKey))]);
 
   let areaIndex = 0;

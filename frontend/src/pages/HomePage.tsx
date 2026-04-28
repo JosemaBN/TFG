@@ -1,22 +1,20 @@
-import { Link } from "react-router-dom";
-import PageHeader from "../components/layout/PageHeader";
-import { paths } from "../routes/paths";
+import portadaUrl from "../assets/Portada.png";
 
 export default function HomePage() {
   return (
-    <section>
-      <PageHeader title="Inicio" />
-      <ul className="link-list">
-        <li>
-          <Link to={paths.materials}>Ver materiales</Link>
-        </li>
-        <li>
-          <Link to={paths.events}>Ver eventos</Link>
-        </li>
-        <li>
-          <Link to={paths.plantilla}>Ver plantilla material × eventos</Link>
-        </li>
-      </ul>
+    <section style={{ width: "100%", background: "#e5e7eb" }}>
+      <img
+        src={portadaUrl}
+        alt="Portada"
+        style={{
+          width: "100%",
+          maxWidth: "none",
+          height: "auto",
+          display: "block",
+          margin: 0,
+          borderRadius: 0,
+        }}
+      />
     </section>
   );
 }

@@ -10,12 +10,6 @@ import EventDetailPage from "../pages/events/EventDetailPage";
 import MovementFormPage from "../pages/movements/MovementFormPage";
 import PlanillaPage from "../pages/planilla/PlanillaPage";
 
-/**
- * Definición de rutas (React Router v6).
- *
- * - path relativo a la raíz del padre: aquí el padre es "/" con AppLayout.
- * - "event/:id" expone el parámetro dinámico `id` (useParams en el detalle).
- */
 export const router = createBrowserRouter([
   {
     path: "/",

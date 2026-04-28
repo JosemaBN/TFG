@@ -3,7 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import PageHeader from "../../components/layout/PageHeader";
 import ErrorMessage from "../../components/common/ErrorMessage";
 import ProductForm from "../../components/products/ProductForm";
-import { createProduct, getProducts } from "../../services/productsService";
+import {
+  createProduct,
+  getProducts,
+  patchProductCompanyInventoryQty,
+} from "../../services/productsService";
 import { getCatalogAreas, getCatalogTipos } from "../../services/catalogService";
 import { upsertStock } from "../../services/stockService";
 import { getWarehouses } from "../../services/warehousesService";
@@ -83,7 +87,7 @@ export default function ProductNewPage() {
       <p>
         <Link to={paths.materials}>← Volver a materiales</Link>
       </p>
-      <PageHeader title="Añadir material" description="Alta de un producto en el catálogo." />
+      <PageHeader title="Añadir material" />
       {error ? <ErrorMessage message={error} /> : null}
       {warehouseHint ? <p className="muted">{warehouseHint}</p> : null}
       <ProductForm
@@ -96,6 +100,9 @@ export default function ProductNewPage() {
           try {
             const { quantity, ...productBody } = data;
             const created = await createProduct(productBody);
+            if (quantity > 0) {
+              await patchProductCompanyInventoryQty(created.id, quantity);
+            }
             if (quantity > 0 && defaultWarehouseId) {
               await upsertStock({
                 productId: created.id,
@@ -107,7 +114,7 @@ export default function ProductNewPage() {
                 "Hay cantidad indicada pero no hay almacén: el producto se creó sin stock. Crea un almacén y asigna stock después."
               );
             }
-            navigate(paths.materialDetail(created.id));
+            navigate(paths.materials);
           } catch (e: unknown) {
             setError(e instanceof ApiError ? e.message : "No se pudo crear el material");
           } finally {

@@ -17,7 +17,7 @@ export default function EventNewPage() {
       <p>
         <Link to={paths.events}>← Volver a eventos</Link>
       </p>
-      <PageHeader title="Añadir evento" description="Crea un proyecto u obra para asignar material." />
+      <PageHeader title="Añadir evento" />
       {error ? <ErrorMessage message={error} /> : null}
       <EventForm
         submitting={submitting}
@@ -25,8 +25,8 @@ export default function EventNewPage() {
           setSubmitting(true);
           setError(null);
           try {
-            const created = await createEvent(data);
-            navigate(paths.eventDetail(created.id));
+            await createEvent(data);
+            navigate(paths.events);
           } catch (e: unknown) {
             setError(e instanceof ApiError ? e.message : "No se pudo crear el evento");
           } finally {

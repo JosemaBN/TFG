@@ -9,6 +9,24 @@ API REST con **Node.js**, **Express**, **Prisma** y **PostgreSQL**, y aplicació
 
 ## Puesta en marcha (revisor / tutor)
 
+### Arranque más rápido (mismo ordenador, cualquier IDE)
+
+1. Copia `.env.example` a `.env` y ajusta `DATABASE_URL`.
+2. (Solo la primera vez) Ejecuta:
+
+```bash
+npm run setup
+```
+
+3. Arranca **API + frontend** a la vez:
+
+```bash
+npm run dev:all
+```
+
+- API: `http://localhost:3000`
+- Frontend: `http://localhost:5173`
+
 1. **Clonar** el repositorio y entrar en la carpeta del proyecto.
 
 2. **Variables de entorno (API)**  
@@ -66,5 +84,7 @@ Cada quien crea su `.env` a partir de `.env.example`.
 
 ## Scripts útiles
 
-- `npm run dev` — API en modo desarrollo  
+- `npm run setup` — instala deps (root + frontend) y ejecuta `prisma migrate deploy` + `prisma generate`
+- `npm run dev:all` — API + frontend en paralelo
+- `npm run dev` — API en modo desarrollo
 - `npm run db:clear-movements` — borra todos los movimientos (script en `scripts/`)

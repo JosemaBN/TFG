@@ -1,8 +1,10 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import PageHeader from "../../components/layout/PageHeader";
 import Spinner from "../../components/common/Spinner";
 import ErrorMessage from "../../components/common/ErrorMessage";
+import DatePickerEsMonday from "../../components/common/DatePickerEsMonday";
+import TimeInput24h from "../../components/common/TimeInput24h";
 import { getEventById, updateEvent } from "../../services/eventsService";
 import { ApiError } from "../../services/apiClient";
 import type { Event } from "../../types/event";
@@ -15,6 +17,7 @@ import {
 
 export default function EventDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [event, setEvent] = useState<Event | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -87,6 +90,7 @@ export default function EventDetailPage() {
         horaDesmontaje: horaDesmontaje.trim(),
       });
       setEvent(updated);
+      navigate(paths.events);
     } catch (err: unknown) {
       setSaveError(err instanceof ApiError ? err.message : "No se pudo guardar");
     } finally {
@@ -115,24 +119,13 @@ export default function EventDetailPage() {
             Nombre del evento *
             <input value={name} onChange={(e) => setName(e.target.value)} required disabled={saving} />
           </label>
-          <label>
-            Fecha de inicio
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              disabled={saving}
-            />
-          </label>
-          <label>
-            Fecha de finalización
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              disabled={saving}
-            />
-          </label>
+          <DatePickerEsMonday label="Fecha de inicio" value={startDate} onChange={setStartDate} disabled={saving} />
+          <DatePickerEsMonday
+            label="Fecha de finalización"
+            value={endDate}
+            onChange={setEndDate}
+            disabled={saving}
+          />
           <label>
             Población
             <input value={poblacion} onChange={(e) => setPoblacion(e.target.value)} disabled={saving} />
@@ -141,51 +134,16 @@ export default function EventDetailPage() {
             Lugar
             <input value={lugar} onChange={(e) => setLugar(e.target.value)} disabled={saving} />
           </label>
-          <label>
-            Hora montaje
-            <input
-              type="time"
-              value={horaMontaje}
-              onChange={(e) => setHoraMontaje(e.target.value)}
-              disabled={saving}
-            />
-          </label>
-          <label>
-            Hora prueba
-            <input
-              type="time"
-              value={horaPrueba}
-              onChange={(e) => setHoraPrueba(e.target.value)}
-              disabled={saving}
-            />
-          </label>
-          <label>
-            Hora comienzo
-            <input
-              type="time"
-              value={horaComienzo}
-              onChange={(e) => setHoraComienzo(e.target.value)}
-              disabled={saving}
-            />
-          </label>
-          <label>
-            Hora fin
-            <input
-              type="time"
-              value={horaFin}
-              onChange={(e) => setHoraFin(e.target.value)}
-              disabled={saving}
-            />
-          </label>
-          <label>
-            Hora desmontaje
-            <input
-              type="time"
-              value={horaDesmontaje}
-              onChange={(e) => setHoraDesmontaje(e.target.value)}
-              disabled={saving}
-            />
-          </label>
+          <TimeInput24h label="Hora montaje" value={horaMontaje} onChange={setHoraMontaje} disabled={saving} />
+          <TimeInput24h label="Hora prueba" value={horaPrueba} onChange={setHoraPrueba} disabled={saving} />
+          <TimeInput24h label="Hora comienzo" value={horaComienzo} onChange={setHoraComienzo} disabled={saving} />
+          <TimeInput24h label="Hora fin" value={horaFin} onChange={setHoraFin} disabled={saving} />
+          <TimeInput24h
+            label="Hora desmontaje"
+            value={horaDesmontaje}
+            onChange={setHoraDesmontaje}
+            disabled={saving}
+          />
           {saveError ? <ErrorMessage message={saveError} /> : null}
           <button type="submit" disabled={saving}>
             {saving ? "Guardando…" : "Guardar"}

@@ -48,7 +48,6 @@ export default function ProductDetailPage() {
 
   const outNetRaw = useMemo(() => movementOutNet(movements), [movements]);
 
-  const invSaved = product?.companyInventoryQty ?? 0;
   const repSaved = product?.repQty ?? 0;
   /** OUT no puede superar INV (mismo criterio que plantilla y API). */
   const invForOutCap = Math.max(0, Math.floor(inventoryQty));

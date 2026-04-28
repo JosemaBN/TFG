@@ -1,3 +1,10 @@
+/**
+ * `src/controllers/`
+ *
+ * Controladores del backend: implementan la lógica de cada endpoint.
+ * - Validan entrada (`req`), transforman datos si hace falta y llaman a Prisma/servicios.
+ * - Devuelven respuestas HTTP consistentes (códigos, mensajes de error, etc.).
+ */
 import type { Request, Response } from "express";
 import { prisma } from "../prismaClient";
 import {
@@ -153,5 +160,22 @@ export async function getMovementsByEvent(req: Request, res: Response) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al listar movimientos del evento" });
+  }
+}
+
+export async function deleteEvent(req: Request, res: Response) {
+  const rawId = req.params.id;
+  const id = Array.isArray(rawId) ? rawId[0] : rawId;
+  if (!id) return res.status(400).json({ error: "id de evento obligatorio" });
+
+  try {
+    await prisma.event.delete({ where: { id } });
+    res.status(204).send();
+  } catch (error: any) {
+    console.error(error);
+    if (error.code === "P2025") {
+      return res.status(404).json({ error: "Evento no encontrado" });
+    }
+    res.status(500).json({ error: "Error al eliminar evento" });
   }
 }

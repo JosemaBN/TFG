@@ -4,7 +4,8 @@ import type { PlanillaRow } from "../../types/planilla";
 import { createMovement } from "../../services/movementsService";
 
 export type PlantillaGridContext = {
-  refreshGrid: () => Promise<void>;
+  /** Recarga completa desde API (puede devolver filas para inspección puntual). */
+  refreshGrid: () => Promise<PlanillaRow[] | null>;
   markOutHighlight?: (productId: string, eventId: string, api: GridApi) => void;
   markInHighlight?: (productId: string, eventId: string, api: GridApi) => void;
   /** Tras OUT exitoso: permite un solo IN hasta que se pulse IN. */

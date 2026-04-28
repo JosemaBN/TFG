@@ -1,3 +1,9 @@
+/**
+ * `src/routes/`
+ *
+ * Definición de rutas del backend usando `express.Router()`.
+ * Separa el “qué URL existe” (rutas) del “qué hace” (controladores).
+ */
 import { Router } from "express";
 import healthRoutes from "./healthRoutes";
 import warehouseRoutes from "./warehouseRoutes";

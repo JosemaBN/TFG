@@ -56,7 +56,6 @@ export default function ProductForm({
 
   return (
     <form onSubmit={handleSubmit} className="stack">
-      <p className="muted">El código interno (SKU) se asigna solo al guardar.</p>
       <label>
         Área
         <select

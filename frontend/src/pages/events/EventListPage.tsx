@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import PageHeader from "../../components/layout/PageHeader";
 import Spinner from "../../components/common/Spinner";
 import ErrorMessage from "../../components/common/ErrorMessage";
 import EmptyState from "../../components/common/EmptyState";
@@ -9,13 +8,12 @@ import { paths } from "../../routes/paths";
 import { groupEventsByMonthAndWeek } from "../../utils/eventListGrouping";
 
 export default function EventListPage() {
-  const { events, loading, error } = useEvents();
+  const { events, loading, error, refetch } = useEvents();
   const { sections, undated } = groupEventsByMonthAndWeek(events);
 
   return (
     <section>
       <div className="page-toolbar">
-        <PageHeader title="Eventos" />
         {!loading && !error ? (
           <Link to={paths.eventNew} className="action-button">
             Añadir evento
@@ -39,7 +37,7 @@ export default function EventListPage() {
                   <p className="events-week-label">{week.weekLabel}</p>
                   <div className="events-week-cards">
                     {week.events.map((ev) => (
-                      <EventCard key={ev.id} event={ev} />
+                      <EventCard key={ev.id} event={ev} onDeleted={refetch} />
                     ))}
                   </div>
                 </div>
@@ -53,7 +51,7 @@ export default function EventListPage() {
               </article>
               <div className="events-week-cards events-week-cards--flat">
                 {undated.map((ev) => (
-                  <EventCard key={ev.id} event={ev} />
+                  <EventCard key={ev.id} event={ev} onDeleted={refetch} />
                 ))}
               </div>
             </div>

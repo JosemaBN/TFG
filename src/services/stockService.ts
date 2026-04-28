@@ -1,3 +1,10 @@
+/**
+ * `src/services/`
+ *
+ * Servicios de dominio (reglas de negocio).
+ * Aquí se encapsulan cálculos y validaciones que no deberían vivir en un controlador concreto,
+ * por ejemplo la lógica de stock, límites de OUT respecto a INV, o errores de negocio.
+ */
 import type { Prisma } from "../generated/prisma";
 
 type MovementType = "SALIDA" | "ENTRADA";

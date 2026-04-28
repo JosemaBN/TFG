@@ -1,4 +1,9 @@
 /**
+ * `scripts/`
+ *
+ * Scripts de utilidad para mantenimiento/limpieza de datos durante el desarrollo.
+ * Ejemplo: borrado masivo de movimientos para volver a un estado “limpio” de pruebas.
+ *
  * Borra todos los registros de Movement (todos los eventos y materiales).
  * Uso: npx ts-node --transpile-only scripts/clear-all-movements.ts
  */

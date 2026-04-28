@@ -1,3 +1,9 @@
+/**
+ * `src/utils/`
+ *
+ * Funciones auxiliares “puras” (sin acceso a BD).
+ * Ejemplos: parseo/normalización de fechas y horas, helpers de payloads, etc.
+ */
 /** Fecha desde el cliente: `YYYY-MM-DD` o ISO; vacío → null (actualización explícita). */
 export function parseEventDateFromBody(v: unknown): Date | null {
   if (v == null || v === "") return null;

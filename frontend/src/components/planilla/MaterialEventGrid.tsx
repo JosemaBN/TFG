@@ -29,16 +29,10 @@ import "./MaterialEventGrid.css";
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const PINNED_TOP_ROW_COUNT = 5;
-/**
- * Ancho fijo columnas OUT/IN por evento (autoSize no calcula bien cellRenderer).
- * Alineado con .planilla-ctl-btn (compacto para ver más columnas de evento).
- */
 const OUT_BTN_COL_WIDTH = 52;
 const IN_BTN_COL_WIDTH = 44;
 
-/** ColIds de métricas (INV/OUT/REP/NAVE) para autoSize al contenido. */
 const METRIC_COLUMN_KEYS = ["inv", "out", "rep", "nave"] as const;
-
 function udQtyForEvent(data: PlanillaRow, eventId: string): number {
   const raw = data[`e_${eventId}_ud`];
   if (typeof raw === "number" && Number.isFinite(raw)) return Math.floor(raw);
@@ -53,13 +47,14 @@ function coerceNonNegInt(v: unknown): number {
 }
 
 function buildColumnDefs(events: Event[]): (ColDef<PlanillaRow> | ColGroupDef<PlanillaRow>)[] {
-  /** Fijas: Material, INV, OUT, REP, NAVE; luego eventos. NAVE = INV − OUT − REP. */
   const pinnedLeft: ColDef<PlanillaRow>[] = [
     {
       colId: "material",
       field: "descripcion",
       headerName: "",
       pinned: "left",
+      lockPinned: true,
+      suppressMovable: true,
       minWidth: 72,
       cellRenderer: DescripcionMaterialCell,
       cellClass: (p) => {
@@ -79,6 +74,8 @@ function buildColumnDefs(events: Event[]): (ColDef<PlanillaRow> | ColGroupDef<Pl
       field: "inv",
       headerName: "",
       pinned: "left",
+      lockPinned: true,
+      suppressMovable: true,
       minWidth: 28,
       type: "numericColumn",
       editable: false,
@@ -91,6 +88,8 @@ function buildColumnDefs(events: Event[]): (ColDef<PlanillaRow> | ColGroupDef<Pl
       colId: "out",
       headerName: "",
       pinned: "left",
+      lockPinned: true,
+      suppressMovable: true,
       minWidth: 28,
       type: "numericColumn",
       editable: false,
@@ -102,12 +101,14 @@ function buildColumnDefs(events: Event[]): (ColDef<PlanillaRow> | ColGroupDef<Pl
       field: "rep",
       headerName: "",
       pinned: "left",
+      lockPinned: true,
+      suppressMovable: true,
       minWidth: 28,
       type: "numericColumn",
       editable: (p) => p.data?.rowKind === "material",
       cellEditor: "agNumberCellEditor",
       cellClass: "planilla-cell--metric",
-      cellEditorParams: (p) => {
+      cellEditorParams: (p: { data?: PlanillaRow }) => {
         const inv = Math.max(0, coerceNonNegInt(p.data?.inv));
         const out = Math.max(0, coerceNonNegInt(p.data?.outNet));
         const repMax = Math.max(0, inv - out);
@@ -128,6 +129,8 @@ function buildColumnDefs(events: Event[]): (ColDef<PlanillaRow> | ColGroupDef<Pl
       field: "nave",
       headerName: "",
       pinned: "left",
+      lockPinned: true,
+      suppressMovable: true,
       minWidth: 28,
       editable: false,
       cellClass: "planilla-cell--metric",
@@ -237,6 +240,10 @@ export default function MaterialEventGrid() {
   const [collapsedAreaUids, setCollapsedAreaUids] = useState<Set<string>>(() => new Set());
   const [collapsedTipoUids, setCollapsedTipoUids] = useState<Set<string>>(() => new Set());
 
+  /**
+   * Recarga completa desde API.
+   * Se usa tras operaciones que cambian OUT neto (movimientos) para evitar inconsistencias locales.
+   */
   const refreshGrid = useCallback(async (): Promise<PlanillaRow[] | null> => {
     try {
       const { rows, events: evs } = await buildPlanillaData();
@@ -251,8 +258,15 @@ export default function MaterialEventGrid() {
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
-    setError(null);
+    /**
+     * Nota React: evitamos setState síncrono en el cuerpo del effect.
+     * Lo programamos en una microtarea para no disparar el warning/regla `react-hooks/set-state-in-effect`.
+     */
+    queueMicrotask(() => {
+      if (cancelled) return;
+      setLoading(true);
+      setError(null);
+    });
     const loadMs = 25_000;
     const timeout = new Promise<never>((_, reject) => {
       window.setTimeout(() => {
@@ -524,6 +538,7 @@ export default function MaterialEventGrid() {
   return (
     <div className="planilla-grid-wrap ag-theme-quartz">
       <AgGridReact<PlanillaRow>
+        theme={"legacy"}
         rowData={visibleBodyRows}
         pinnedTopRowData={pinnedTopRowData}
         columnDefs={columnDefs}

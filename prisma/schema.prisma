@@ -1,3 +1,9 @@
+// `prisma/`
+//
+// Definición del modelo de datos y su evolución.
+// - `schema.prisma`: modelos (tablas) y relaciones del proyecto.
+// - `migrations/`: historial de migraciones para reproducir la BD en otra máquina (`prisma migrate deploy`).
+
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -33,6 +39,13 @@ model CatalogTipo {
   createdAt DateTime @default(now())
 }
 
+/// Material (catálogo de inventario).
+///
+/// Referencias funcionales (para defensa del TFG):
+/// - **companyInventoryQty**: INV (cantidad total propiedad de la empresa).
+/// - **repQty**: REP (reserva interna, no es una salida física).
+/// - **Movement**: registra salidas/entradas por evento; agregando sus cantidades obtenemos OUT neto.
+/// - **EventProductPlan**: Ud planificadas por evento×material (planificación, no movimiento).
 model Product {
   id          String   @id @default(cuid())
   /// Código interno autoincremental (no editable en la app)
@@ -97,7 +110,8 @@ model Event {
   eventProductPlans EventProductPlan[]
 }
 
-/// Cantidad planificada (Ud) por evento y material en la plantilla
+/// Cantidad planificada (Ud) por evento y material en la plantilla.
+/// Sirve para preparar cantidades antes del montaje; los movimientos reales se registran en `Movement`.
 model EventProductPlan {
   eventId    String
   productId  String
@@ -115,7 +129,8 @@ enum MovementType {
   ENTRADA // material vuelve del evento al almacén
 }
 
-// Many-to-many Event ↔ Product: cada fila es un movimiento (salida o entrada) de un producto en un evento
+// Relación N:M Evento ↔ Material: cada fila es un movimiento físico (salida o entrada) de un material en un evento.
+// OUT neto por material = Σ(SALIDA) − Σ(ENTRADA) (acotado por INV para evitar incoherencias históricas).
 model Movement {
   id        String       @id @default(cuid())
   eventId   String

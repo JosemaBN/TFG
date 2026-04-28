@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getEvents } from "../services/eventsService";
 import { ApiError } from "../services/apiClient";
 import type { Event } from "../types/event";
@@ -11,6 +11,17 @@ export function useEvents() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const refetch = useCallback(() => {
+    setError(null);
+    return getEvents()
+      .then((data) => {
+        setEvents(data);
+      })
+      .catch((e: unknown) => {
+        setError(e instanceof ApiError ? e.message : "Error al cargar eventos");
+      });
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -33,5 +44,5 @@ export function useEvents() {
     };
   }, []);
 
-  return { events, loading, error };
+  return { events, loading, error, refetch };
 }

@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { dateInputToIso } from "../../utils/eventFormValues";
+import DatePickerEsMonday from "../common/DatePickerEsMonday";
+import TimeInput24h from "../common/TimeInput24h";
 
 type EventFormProps = {
   onSubmit: (data: {
@@ -57,24 +59,13 @@ export default function EventForm({ onSubmit, submitting }: EventFormProps) {
           disabled={submitting}
         />
       </label>
-      <label>
-        Fecha de inicio
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          disabled={submitting}
-        />
-      </label>
-      <label>
-        Fecha de finalización
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-          disabled={submitting}
-        />
-      </label>
+      <DatePickerEsMonday label="Fecha de inicio" value={startDate} onChange={setStartDate} disabled={submitting} />
+      <DatePickerEsMonday
+        label="Fecha de finalización"
+        value={endDate}
+        onChange={setEndDate}
+        disabled={submitting}
+      />
       <label>
         Población
         <input value={poblacion} onChange={(e) => setPoblacion(e.target.value)} disabled={submitting} />
@@ -83,51 +74,16 @@ export default function EventForm({ onSubmit, submitting }: EventFormProps) {
         Lugar
         <input value={lugar} onChange={(e) => setLugar(e.target.value)} disabled={submitting} />
       </label>
-      <label>
-        Hora montaje
-        <input
-          type="time"
-          value={horaMontaje}
-          onChange={(e) => setHoraMontaje(e.target.value)}
-          disabled={submitting}
-        />
-      </label>
-      <label>
-        Hora prueba
-        <input
-          type="time"
-          value={horaPrueba}
-          onChange={(e) => setHoraPrueba(e.target.value)}
-          disabled={submitting}
-        />
-      </label>
-      <label>
-        Hora comienzo
-        <input
-          type="time"
-          value={horaComienzo}
-          onChange={(e) => setHoraComienzo(e.target.value)}
-          disabled={submitting}
-        />
-      </label>
-      <label>
-        Hora fin
-        <input
-          type="time"
-          value={horaFin}
-          onChange={(e) => setHoraFin(e.target.value)}
-          disabled={submitting}
-        />
-      </label>
-      <label>
-        Hora desmontaje
-        <input
-          type="time"
-          value={horaDesmontaje}
-          onChange={(e) => setHoraDesmontaje(e.target.value)}
-          disabled={submitting}
-        />
-      </label>
+      <TimeInput24h label="Hora montaje" value={horaMontaje} onChange={setHoraMontaje} disabled={submitting} />
+      <TimeInput24h label="Hora prueba" value={horaPrueba} onChange={setHoraPrueba} disabled={submitting} />
+      <TimeInput24h label="Hora comienzo" value={horaComienzo} onChange={setHoraComienzo} disabled={submitting} />
+      <TimeInput24h label="Hora fin" value={horaFin} onChange={setHoraFin} disabled={submitting} />
+      <TimeInput24h
+        label="Hora desmontaje"
+        value={horaDesmontaje}
+        onChange={setHoraDesmontaje}
+        disabled={submitting}
+      />
       <button type="submit" disabled={submitting}>
         {submitting ? "Guardando…" : "Crear evento"}
       </button>

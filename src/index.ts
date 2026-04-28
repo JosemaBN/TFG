@@ -33,7 +33,7 @@ app.use((_req, res, next) => {
   next();
 });
 
-// ----- Health -----
+// ----- Comprobación de estado (health) -----
 app.get("/", (_req, res) => {
   res.json({ message: "API inventario por eventos ✅" });
 });
@@ -570,6 +570,21 @@ app.put("/events/:id", async (req, res) => {
       return res.status(409).json({ error: "El código de evento ya existe" });
     }
     res.status(500).json({ error: "Error al actualizar evento" });
+  }
+});
+
+app.delete("/events/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!id) return res.status(400).json({ error: "id de evento obligatorio" });
+  try {
+    await prisma.event.delete({ where: { id } });
+    res.status(204).send();
+  } catch (error: any) {
+    console.error(error);
+    if (error.code === "P2025") {
+      return res.status(404).json({ error: "Evento no encontrado" });
+    }
+    res.status(500).json({ error: "Error al eliminar evento" });
   }
 });
 

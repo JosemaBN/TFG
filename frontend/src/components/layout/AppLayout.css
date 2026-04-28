@@ -5,29 +5,30 @@
 }
 
 .app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 1.25rem;
-  border-bottom: 1px solid #e5e7eb;
-  background: #fafafa;
-}
-
-.app-brand {
-  font-size: 1rem;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-ui);
+  background: var(--header-bg);
 }
 
 .app-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1rem;
+  justify-content: center;
+  gap: 0.5rem 1.25rem;
 }
 
 .nav-link {
-  color: #2563eb;
+  color: var(--app-text);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 1.4rem;
 }
 
 .nav-link:hover {
@@ -36,19 +37,12 @@
 
 .nav-link--active {
   font-weight: 600;
-  color: #1d4ed8;
+  color: var(--app-text);
 }
 
 .app-main {
   flex: 1;
-  padding: 1.25rem;
-  max-width: 960px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-/** Plantilla: tabla material × eventos a ancho completo del viewport. */
-.app-main--wide {
+  padding: 0;
   max-width: none;
   width: 100%;
   margin: 0;
@@ -61,7 +55,8 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem 0;
+  padding: 0.85rem 1rem 0;
 }
 
 .page-toolbar .page-header {

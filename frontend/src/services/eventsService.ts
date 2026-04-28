@@ -55,3 +55,7 @@ export function updateEvent(id: string, body: EventUpdateBody): Promise<Event> {
     body: JSON.stringify(body),
   });
 }
+
+export function deleteEvent(id: string): Promise<void> {
+  return apiFetch<void>(`/events/${id}`, { method: "DELETE" });
+}

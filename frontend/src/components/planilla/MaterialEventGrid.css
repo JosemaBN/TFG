@@ -1,4 +1,3 @@
-/* Tema oscuro tipo hoja de inventario */
 .planilla-ctl-btn {
   display: inline-flex;
   align-items: center;
@@ -25,38 +24,26 @@
   cursor: not-allowed;
 }
 
-@media (prefers-color-scheme: dark) {
-  .planilla-ctl-btn {
-    background: #1e3a5f;
-    border-color: #60a5fa;
-    color: #bfdbfe;
-  }
-  .planilla-ctl-btn:hover:not(:disabled) {
-    background: #2563eb;
-    color: #fff;
-  }
-}
-
 .planilla-page {
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  padding: 0 !important;
 }
 
 .planilla-grid-wrap {
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  height: min(78vh, 960px);
-  --ag-background-color: #1a1a1a;
-  --ag-header-background-color: #2d2d2d;
-  --ag-odd-row-background-color: #222;
-  --ag-row-hover-color: #333;
-  --ag-border-color: #444;
-  --ag-header-foreground-color: #f3f4f6;
-  --ag-foreground-color: #f9fafb;
+  height: calc(100svh - 64px);
+  --ag-background-color: var(--app-bg);
+  --ag-header-background-color: var(--app-bg);
+  --ag-odd-row-background-color: var(--app-bg);
+  --ag-row-hover-color: color-mix(in srgb, var(--app-bg) 85%, var(--surface-bg) 15%);
+  --ag-border-color: var(--border-ui);
+  --ag-header-foreground-color: var(--app-text);
+  --ag-foreground-color: var(--app-text);
   --ag-font-size: 12px;
-  /* Menos padding en todas las celdas → más columnas de evento visibles */
   --ag-cell-horizontal-padding: 6px;
 }
 
@@ -71,6 +58,12 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+/* Todas las filas: mismo fondo y texto */
+.planilla-grid-wrap .ag-cell {
+  background-color: var(--app-bg);
+  color: var(--app-text);
 }
 
 /* INV / OUT / REP / NAVE: padding horizontal mínimo */
@@ -180,29 +173,33 @@
 /* Filas por tipo */
 .planilla-row--param .ag-cell {
   font-weight: 500;
-  background-color: #252530 !important;
+  background-color: var(--app-bg) !important;
+  color: var(--app-text) !important;
 }
 
 .planilla-row--columnLabels .ag-cell {
   font-weight: 700;
-  background-color: #2d3748 !important;
-  color: #f9fafb !important;
+  /* Fila INV/OUT/REP/NAVE: mismo gris que la cabecera superior */
+  background-color: var(--header-bg) !important;
+  color: var(--app-text) !important;
 }
 
 .planilla-row--areaSection .ag-cell {
   font-weight: 700;
-  background-color: #2a2a2a !important;
+  background-color: var(--app-bg) !important;
+  color: var(--app-text) !important;
 }
 
 .planilla-row--tipoSection .ag-cell {
   font-weight: 600;
-  background-color: #262626 !important;
+  background-color: var(--app-bg) !important;
+  color: var(--app-text) !important;
 }
 
 .planilla-row--subarea .ag-cell {
   font-weight: 600;
-  background-color: #363636 !important;
-  color: #e5e7eb !important;
+  background-color: var(--app-bg) !important;
+  color: var(--app-text) !important;
 }
 
 .planilla-cell--param {

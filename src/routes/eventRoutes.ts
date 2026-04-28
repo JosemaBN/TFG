@@ -5,6 +5,7 @@ import {
   updateEvent,
   getEventById,
   getMovementsByEvent,
+  deleteEvent,
 } from "../controllers/eventController";
 
 const router = Router();
@@ -12,6 +13,7 @@ const router = Router();
 router.get("/", listEvents);
 router.post("/", createEvent);
 router.put("/:id", updateEvent);
+router.delete("/:id", deleteEvent);
 router.get("/:id/movements", getMovementsByEvent);
 router.get("/:id", getEventById);
 
