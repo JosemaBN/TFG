@@ -52,7 +52,7 @@
   font-weight: 600;
 }
 
-/* Texto centrado en celdas */
+
 .planilla-grid-wrap .ag-cell {
   display: flex;
   align-items: center;
@@ -60,19 +60,19 @@
   text-align: center;
 }
 
-/* Todas las filas: mismo fondo y texto */
+
 .planilla-grid-wrap .ag-cell {
   background-color: var(--app-bg);
   color: var(--app-text);
 }
 
-/* INV / OUT / REP / NAVE: padding horizontal mínimo */
+
 .planilla-grid-wrap .ag-cell.planilla-cell--metric {
   padding-left: 2px;
   padding-right: 2px;
 }
 
-/* Ud por evento: celdas numéricas lo más estrechas posible */
+
 .planilla-grid-wrap .ag-cell.planilla-cell--ud {
   padding-left: 2px;
   padding-right: 2px;
@@ -85,7 +85,7 @@
   text-align: center;
 }
 
-/* Columnas OUT/IN: padding mínimo */
+
 .planilla-grid-wrap .ag-cell.planilla-cell--mov-btn {
   padding-left: 3px;
   padding-right: 3px;
@@ -97,14 +97,14 @@
   overflow: visible;
 }
 
-/* Ud > 0: fondo rojo (filas material) */
+
 .planilla-ud--positive {
   background-color: #b91c1c !important;
   color: #fef2f2 !important;
   font-weight: 600;
 }
 
-/* Tras clic OUT / IN (solo celda Ud) */
+
 .planilla-cell--mov-out {
   background-color: #166534 !important;
   color: #f0fdf4 !important;
@@ -168,9 +168,9 @@
   background-color: #3d3d3d !important;
 }
 
-/* Cabecera de grid oculta (headerHeight: 0): sin fila extra visible */
 
-/* Filas por tipo */
+
+
 .planilla-row--param .ag-cell {
   font-weight: 500;
   background-color: var(--app-bg) !important;
@@ -179,7 +179,7 @@
 
 .planilla-row--columnLabels .ag-cell {
   font-weight: 700;
-  /* Fila INV/OUT/REP/NAVE: mismo gris que la cabecera superior */
+  
   background-color: var(--header-bg) !important;
   color: var(--app-text) !important;
 }

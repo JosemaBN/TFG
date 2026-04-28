@@ -6,34 +6,29 @@ import EventForm from "../../components/events/EventForm";
 import { createEvent } from "../../services/eventsService";
 import { ApiError } from "../../services/apiClient";
 import { paths } from "../../routes/paths";
-
 export default function EventNewPage() {
-  const navigate = useNavigate();
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  return (
-    <section>
+    const navigate = useNavigate();
+    const [submitting, setSubmitting] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    return (<section>
       <p>
         <Link to={paths.events}>← Volver a eventos</Link>
       </p>
-      <PageHeader title="Añadir evento" />
-      {error ? <ErrorMessage message={error} /> : null}
-      <EventForm
-        submitting={submitting}
-        onSubmit={async (data) => {
-          setSubmitting(true);
-          setError(null);
-          try {
-            await createEvent(data);
-            navigate(paths.events);
-          } catch (e: unknown) {
-            setError(e instanceof ApiError ? e.message : "No se pudo crear el evento");
-          } finally {
-            setSubmitting(false);
-          }
-        }}
-      />
-    </section>
-  );
+      <PageHeader title="Añadir evento"/>
+      {error ? <ErrorMessage message={error}/> : null}
+      <EventForm submitting={submitting} onSubmit={async (data) => {
+            setSubmitting(true);
+            setError(null);
+            try {
+                await createEvent(data);
+                navigate(paths.events);
+            }
+            catch (e: unknown) {
+                setError(e instanceof ApiError ? e.message : "No se pudo crear el evento");
+            }
+            finally {
+                setSubmitting(false);
+            }
+        }}/>
+    </section>);
 }

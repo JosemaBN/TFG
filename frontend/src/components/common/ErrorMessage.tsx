@@ -1,11 +1,8 @@
 type ErrorMessageProps = {
-  message: string;
+    message: string;
 };
-
 export default function ErrorMessage({ message }: ErrorMessageProps) {
-  return (
-    <p className="error" role="alert">
+    return (<p className="error" role="alert">
       {message}
-    </p>
-  );
+    </p>);
 }

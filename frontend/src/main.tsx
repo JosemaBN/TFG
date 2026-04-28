@@ -4,9 +4,6 @@ import { RouterProvider } from "react-router-dom";
 import "./index.css";
 import "./assets/styles/global.css";
 import { router } from "./routes";
-
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
-);
+createRoot(document.getElementById("root")!).render(<StrictMode>
+    <RouterProvider router={router}/>
+  </StrictMode>);
